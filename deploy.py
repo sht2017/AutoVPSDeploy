@@ -92,7 +92,7 @@ class DeployKit:
         with open(_RC_LOCAL_PATH, "r+") as file:
             _content = file.read().replace(f"\nscreen -dmS otp-service {_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/otp.py","")
             file.seek(0)
-            file.writelines([_content,f"screen -dmS otp-service {_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/otp.py"])
+            file.write(f"{_content}\nscreen -dmS otp-service {_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/otp.py")
         logging.debug("rc.local is fine")
         self.shell("screen -dmS otp-service "+_OTP_PATH+"otp.py")
         logging.info("OTP service installed")
