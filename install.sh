@@ -15,8 +15,8 @@ cd AutoVPSDeploy
 ########## [-] Initialization [-] ##########
 
 ########## [+] Install necessary python libs [+] ##########
-python3 -m venv .venv
-.venv/bin/pip3 install -r core_requirements.txt
+# python3 -m venv .venv
+# .venv/bin/pip3 install -r core_requirements.txt
 ########## [-] Install necessary python libs [-] ##########
 
 ########## [+] Run Setup [+] ##########

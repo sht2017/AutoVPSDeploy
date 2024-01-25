@@ -1,8 +1,0 @@
-certifi==2021.10.8
-charset-normalizer==2.0.12
-idna==3.3
-pyotp==2.6.0
-PyQRCode==1.2.1
-requests==2.27.1
-urllib3==1.26.9
-wget==3.2
