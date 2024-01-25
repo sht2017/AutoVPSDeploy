@@ -74,7 +74,7 @@ class DeployKit:
         logging.info("Enabled rc.local")
     
     def deploy_otp(self):
-        _OTP_PATH = "/etc/otp/"
+        _OTP_PATH = "/etc/otp"
         _RC_LOCAL_PATH = "/etc/rc.local"
         logging.info("Installing OTP service")
         try:
@@ -82,16 +82,17 @@ class DeployKit:
         except:
             pass
         shutil.copytree("scripts/otp", _OTP_PATH)
-        self.chmod(_OTP_PATH+"setup.py")
-        self.chmod(_OTP_PATH+"otp.py")
+        self.chmod(f"{_OTP_PATH}/setup.py")
+        self.chmod(f"{_OTP_PATH}/otp.py")
         logging.debug("Copied and inited OTP core files")
-        self.shell("pip3 install -r "+_OTP_PATH+"otp_requirements.txt")
+        self.shell(f"python3 -m venv {_OTP_PATH}/.venv")
+        self.shell(f"{_OTP_PATH}/.venv/bin/pip3 install -r {_OTP_PATH}/otp_requirements.txt")
         logging.debug("Required python lib installed")
-        self.shell(_OTP_PATH+"setup.py")
+        self.shell(f"{_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/setup.py")
         with open(_RC_LOCAL_PATH, "r+") as file:
-            _content = file.read().replace("\nscreen -dmS otp-service "+_OTP_PATH+"otp.py","")
+            _content = file.read().replace(f"\nscreen -dmS otp-service {_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/otp.py","")
             file.seek(0)
-            file.writelines([_content,"screen -dmS otp-service " + _OTP_PATH+"otp.py"])
+            file.writelines([_content,f"screen -dmS otp-service {_OTP_PATH}/.venv/bin/python3 {_OTP_PATH}/otp.py"])
         logging.debug("rc.local is fine")
         self.shell("screen -dmS otp-service "+_OTP_PATH+"otp.py")
         logging.info("OTP service installed")
