@@ -1,0 +1,2 @@
+pyotp>=2.6.0
+PyQRCode>=1.2.1
