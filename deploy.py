@@ -5,7 +5,7 @@ import sys
 import random
 import string
 import shutil
-import platform
+import socket
 import subprocess
 import logging
 import re
@@ -23,15 +23,8 @@ class DeployKit:
     def __init__(self, domain_name: str) -> None:
         self.domain_name = domain_name
         self.ip = requests.get('https://checkip.amazonaws.com').text.strip()
-
-    # @property
-    # def SYS_INFO(self) -> str:
-    #     _info = {
-    #         "system": platform.uname().system,
-    #         "version": platform.uname().version,
-    #         "release": platform.uname().release
-    #     }
-    #     return _info
+        if socket.gethostbyname(self.domain_name) != self.ip:
+            raise LookupError('The ip is not resolved to the address inputted. Try again in few minutes?')
 
     def shell(self, command) -> str:
         _process = subprocess.Popen(
@@ -64,7 +57,7 @@ class DeployKit:
 
     def sys_update(self):
         logging.info("Updating system...")
-        self.shell("apt update && apt dist-upgrade -y")
+        self.shell("apt-get update && apt-get dist-upgrade -y")
 
     def rc_local_enable(self):
         _RC_LOCAL_PATH = "/etc/rc.local"
@@ -105,8 +98,8 @@ class DeployKit:
 
     def deploy_ssr(self):
         logging.info("Installing SSR")
-        self.shell("apt install python2 -y")
-        self.shell("update-alternatives --install /usr/bin/python python /usr/bin/python2")
+        self.shell("apt-get install unzip libsodium-dev -y")
+        # self.shell("update-alternatives --install /usr/bin/python python /usr/bin/python2")
         logging.debug("Requirements installed")
         with open("ssrpwd","w") as file:
             file.write(''.join(random.choice(string.ascii_letters+string.punctuation.replace("\"","").replace("\'","").replace("\\","")).replace(":","") for _ in range(128)))

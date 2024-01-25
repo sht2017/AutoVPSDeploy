@@ -614,10 +614,7 @@ Debian_apt(){
 # 下载 ShadowsocksR
 Download_SSR(){
 	cd "/usr/local/"
-	wget -N --no-check-certificate "https://github.com/ToyoDAdoubiBackup/shadowsocksr/archive/manyuser.zip"
-	#git config --global http.sslVerify false
-	#env GIT_SSL_NO_VERIFY=true git clone -b manyuser https://github.com/ToyoDAdoubiBackup/shadowsocksr.git
-	#[[ ! -e ${ssr_folder} ]] && echo -e "${Error} ShadowsocksR服务端 下载失败 !" && exit 1
+	wget -N --no-check-certificate "https://github.com/sht2017/AutoVPSDeploy/releases/download/mod/ssr-manyuser.zip"
 	[[ ! -e "manyuser.zip" ]] && echo -e "${Error} ShadowsocksR服务端 压缩包 下载失败 !" && rm -rf manyuser.zip && exit 1
 	unzip "manyuser.zip"
 	[[ ! -e "/usr/local/shadowsocksr-manyuser/" ]] && echo -e "${Error} ShadowsocksR服务端 解压失败 !" && rm -rf manyuser.zip && exit 1
@@ -630,21 +627,9 @@ Download_SSR(){
 	echo -e "${Info} ShadowsocksR服务端 下载完成 !"
 }
 Service_SSR(){
-	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/service/ssr_centos -O /etc/init.d/ssr; then
-			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
-		fi
-		chmod +x /etc/init.d/ssr
-		chkconfig --add ssr
-		chkconfig ssr on
-	else
-		if ! wget --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/service/ssr_debian -O /etc/init.d/ssr; then
-			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
-		fi
-		chmod +x /etc/init.d/ssr
-		update-rc.d -f ssr defaults
-	fi
-	echo -e "${Info} ShadowsocksR服务 管理脚本下载完成 !"
+	cp ${filepath}/.service.sh /etc/init.d/ssr
+	chmod +x /etc/init.d/ssr
+	update-rc.d -f ssr defaults
 }
 # 安装 JQ解析器
 JQ_install(){
