@@ -20,5 +20,6 @@ cd AutoVPSDeploy
 ########## [-] Install necessary python libs [-] ##########
 
 ########## [+] Run Setup [+] ##########
+#.venv/bin/python3 ./deploy.py
 .venv/bin/python3 ./deploy.py
 ########## [-] Run Setup [-] ##########
