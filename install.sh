@@ -7,6 +7,7 @@ apt-get install git screen python3 python3-pip python3-venv -y
 ########## [-] Upgrade software packages and install necessary packages [-] ##########
 
 ########## [+] Clone source [+] ##########
+cd ~
 git clone https://github.com/sht2017/AutoVPSDeploy.git
 ########## [-] Clone source [-] ##########
 
