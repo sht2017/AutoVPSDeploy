@@ -21,5 +21,5 @@ cd AutoVPSDeploy
 
 ########## [+] Run Setup [+] ##########
 #.venv/bin/python3 ./deploy.py
-.venv/bin/python3 ./deploy.py
+python3 ./deploy.py
 ########## [-] Run Setup [-] ##########
